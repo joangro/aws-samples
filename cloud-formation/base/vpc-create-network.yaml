@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create a new VPC network
+Parameters:
+  VPCRange:
+    Type: String
+    Description: VPC range to assign to the new network
+Resources:
+  NewVPCNetwork:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 
+        Ref: VPCRange
+      EnableDnsHostnames: True
+      EnableDnsSupport: True
+      InstanceTenancy: default
+Outputs:
+  CreatedVPC:
+    Value: !Join [ ' ', ['Created VPC with ID', !Ref NewVPCNetwork]]
+

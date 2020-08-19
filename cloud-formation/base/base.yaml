@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Base template for CF. Just outputs a value
+# Condition to evaluate always to false
+Conditions:
+  CreateResource: !Equals [ false, true ]
+Resources:
+  EmptyResource:
+    Type: Custom::EmptyResource
+    Condition: CreateResource
+Outputs:
+  EchoValue:
+    Description: Just print a value
+    Value: Hello CloudFormation!
