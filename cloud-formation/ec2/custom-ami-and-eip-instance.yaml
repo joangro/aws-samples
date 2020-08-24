@@ -1,0 +1,46 @@
+Parameters:
+  SSHSource:
+    Description: IP address to SSH to the webserver from (don't input the range!)
+    Type: String
+  InstanceType:
+    Description: Instance type to use on the webserver
+    Type: String
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Default: t2.micro
+  MyKeyName:
+    Description: Key name to use to SSH onto the instance
+    Type: AWS::EC2::KeyPair::KeyName
+  MySubnetID:
+    Description: Subnet where the instance will be launched
+    Type: AWS::EC2::Subnet::Id
+  AmazonLinux2:
+    Description: Retrieve latest amazon linux 2 image from publix SSM
+    Type: 'AWS::SSM::Parameter::Value<String>'
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+Resources:
+  EC2Webserver:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SecurityGroups:
+        - !Ref WebserverSecurityGroup
+      KeyName: !Ref MyKeyName
+      ImageId: !Ref AmazonLinux2
+      InstanceType: !Ref InstanceType
+  WebserverEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      InstanceId: !Ref EC2Webserver
+  WebserverSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable access to Webserver
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Description: SSH access to webserver
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: !Join ['', [!Ref SSHSource, '/32']]

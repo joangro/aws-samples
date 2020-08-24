@@ -1,0 +1,43 @@
+Parameters:
+  SSHSource:
+    Description: IP address to access the webserver from (don't input the range!)
+    Type: String
+  InstanceType:
+    Description: Instance type to use on the webserver
+    Type: String
+    AllowedValues:
+      - t2.micro
+      - m1.small
+      - m1.large
+    Default: t2.micro
+  MyKeyName:
+    Description: Key name to use to SSH onto the instance
+    Type: AWS::EC2::KeyPair::KeyName
+  MySubnetID:
+    Description: Subnet where the instance will be launched
+    Type: AWS::EC2::Subnet::Id
+Resources:
+  EC2Webserver:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SecurityGroups:
+        - !Ref WebserverSecurityGroup
+      KeyName: !Ref MyKeyName
+      ImageId: 'ami-07d9160fa81ccffb5'
+      InstanceType: !Ref InstanceType
+      #SubnetId: !Ref MySubnetID
+  WebserverSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable access to Webserver
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Description: SSH access to webserver
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: !Join ['', [!Ref SSHSource, '/32']]
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0
+
