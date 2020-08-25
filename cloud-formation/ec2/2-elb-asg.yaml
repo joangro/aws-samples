@@ -1,0 +1,116 @@
+Parameters:
+  Subnet:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet to use
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Key name to ssh onto the instance
+Resources:
+  Template:
+    Type: AWS::EC2::LaunchTemplate
+    Metadata:
+      AWS::CloudFormation::Init:
+        configSets:
+          install:
+            - php
+            - httpd
+        httpd:
+          commands:
+            01_update:
+              command: yum update -y
+            02_install_httpd:
+              command: yum install httpd -y 
+            03_start_httpd: 
+              command: systemctl start httpd
+            04_enable_httpd:
+              command: systemctl enable httpd
+        php:
+          commands:
+            01_update:
+              command:  yum update -y
+            02_install_php:
+             command:  yum install php -y
+    Properties:
+      LaunchTemplateData:
+        ImageId: ami-07d9160fa81ccffb5
+        KeyName: !Ref KeyName
+        InstanceType: t3.micro
+        SecurityGroupIds:
+        - !GetAtt SecurityGroup.GroupId
+        UserData: !Base64
+          Fn::Base64: !Sub |
+             #!/bin/bash -xe
+             /opt/aws/bin/cfn-init -v --stack ${AWS::StackId} --resource Template --configsets install --region ${AWS::Region}
+             /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackId} --resource AutoScalingGroup --region ${AWS::Region} 
+    DependsOn: SecurityGroup
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow HTTP traffic
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      VpcId: vpc-0f989b80e6cf29a1d
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier: 
+        - !Ref Subnet
+      MinSize: 1
+      MaxSize: 3
+      DesiredCapacity: 2
+      HealthCheckGracePeriod: 100
+      LaunchTemplate:
+        LaunchTemplateId: !Ref Template
+        Version: !GetAtt Template.LatestVersionNumber
+      LoadBalancerNames:
+        - !Ref ELB
+    CreationPolicy:
+      ResourceSignal:
+        Count: 1
+        Timeout: PT15M
+    UpdatePolicy: 
+      AutoScalingRollingUpdate: 
+        MinInstancesInService: "1"
+        MaxBatchSize: "1"
+        PauseTime: "PT15M"
+        WaitOnResourceSignals: "true"
+        SuspendProcesses:
+          - HealthCheck
+          - ReplaceUnhealthy
+          - AZRebalance
+          - AlarmNotification
+          - ScheduledActions
+
+  ASGPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName:
+        !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification: 
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 60
+    DependsOn: AutoScalingGroup
+  ELB:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      Subnets:
+        - !Ref Subnet
+      SecurityGroups:
+      - !Ref SecurityGroup
+      Listeners:
+      - LoadBalancerPort: 80
+        InstancePort: 80
+        Protocol: TCP
+      Scheme: internet-facing
