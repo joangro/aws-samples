@@ -1,0 +1,160 @@
+# Mappings created with https://pypi.org/project/cfn-ami-to-mapping/
+Resources:
+#
+# Define VPC
+#
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsHostnames: True
+      EnableDnsSupport: True
+#
+# End define VPC
+#
+####
+#
+# Define subnets
+#
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}a
+      CidrBlock: !Select [ 0, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}b
+      CidrBlock: !Select [ 1, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}a
+      CidrBlock: !Select [ 2, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      MapPublicIpOnLaunch: True
+      VpcId:
+        !Ref VPC
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}b
+      MapPublicIpOnLaunch: True
+      CidrBlock: !Select [ 3, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+#
+# End define Subnets
+#
+####
+#
+# Make subnets public
+#
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: InternetGateway
+      VpcId: 
+        Ref: VPC
+  RouteTablePublic:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        !Ref VPC
+  RouteToInternet:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        !Ref InternetGateway
+      RouteTableId:
+        !Ref RouteTablePublic
+  AttachPublicSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTablePublic
+      SubnetId:
+        !Ref PublicSubnet1
+  AttachPublicSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTablePublic
+      SubnetId:
+        !Ref PublicSubnet2
+#
+# End Make subnets public
+#
+####
+#
+# Create NAT Instance
+# ami-032df3592cc862884
+  NATSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Attach to NAT, allow internal traffic to internet
+      VpcId:
+        !Ref VPC
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        CidrIp: !GetAtt VPC.CidrBlock
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        CidrIp: 0.0.0.0/0
+  NATInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-032df3592cc862884
+      InstanceType: t3.micro
+      SecurityGroupIds: 
+      - !GetAtt NATSecurityGroup.GroupId
+      SubnetId: 
+        Ref: PublicSubnet1
+      SourceDestCheck: False
+#
+# End create NAT
+#
+####
+#
+# Create Internal Routes
+#
+  RouteTableInternal:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        !Ref VPC
+  RouteToInternetPrivate:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      InstanceId:
+        !Ref NATInstance
+      RouteTableId:
+        !Ref RouteTableInternal
+  AttachPrivateSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTableInternal
+      SubnetId:
+        !Ref PrivateSubnet1
+  AttachPrivateSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTableInternal
+      SubnetId:
+        !Ref PrivateSubnet2
+Outputs:
+  VPCid:
+    Value: !Ref VPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPC'
+

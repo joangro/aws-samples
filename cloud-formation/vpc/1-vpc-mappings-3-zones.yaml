@@ -1,0 +1,231 @@
+# Mappings created with https://pypi.org/project/cfn-ami-to-mapping/
+Conditions:
+  LessThanThreeAZs:
+    Fn::Or:
+      - !Equals [!Ref "AWS::Region", "us-west-1"]
+      - !Equals [!Ref "AWS::Region", "ca-central-1"]
+      - !Equals [!Ref "AWS::Region", "sa-east-1"]
+      - !Equals [!Ref "AWS::Region", "ap-northeast-3"]
+  MoreThanThreeAZs:
+    Fn::Not:
+      - Condition: LessThanThreeAZs
+Mappings:
+  AMIRegionMap:
+    af-south-1:
+      AMIID: ami-068bf79dfb2bc0474
+    ap-east-1:
+      AMIID: ami-851053f4
+    ap-northeast-1:
+      AMIID: ami-0481e994e8d29db03
+    ap-northeast-2:
+      AMIID: ami-07bed51507c769843
+    ap-northeast-3:
+      AMIID: ami-0b2c6450a7e505027
+    ap-south-1:
+      AMIID: ami-0240522d3ed3ae5ec
+    ap-southeast-1:
+      AMIID: ami-09a263088286e87d1
+    ap-southeast-2:
+      AMIID: ami-083dc6c6eb8ac18a8
+    ca-central-1:
+      AMIID: ami-062bcf715d048ae22
+    eu-central-1:
+      AMIID: ami-0a3d79918c0b64aac
+    eu-north-1:
+      AMIID: ami-04d58d9ed10c893b4
+    eu-south-1:
+      AMIID: ami-06a4980f3677a1716
+    eu-west-1:
+      AMIID: ami-032df3592cc862884
+    eu-west-2:
+      AMIID: ami-0e430e165487ea925
+    eu-west-3:
+      AMIID: ami-0966fbf8a2a71fa29
+    me-south-1:
+      AMIID: ami-0ecaad98428393640
+    sa-east-1:
+      AMIID: ami-04cb968946195a4bc
+    us-east-1:
+      AMIID: ami-01ef31f9f39c5aaed
+    us-east-2:
+      AMIID: ami-06064740484d375de
+    us-west-1:
+      AMIID: ami-0e365eb5252ebe986
+    us-west-2:
+      AMIID: ami-0fcc6101b7f2370b9
+Resources:
+#
+# Define VPC
+#
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsHostnames: True
+      EnableDnsSupport: True
+#
+# End define VPC
+#
+####
+#
+# Define subnets
+#
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}a
+      CidrBlock: !Select [ 0, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}b
+      CidrBlock: !Select [ 1, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}a
+      CidrBlock: !Select [ 2, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      MapPublicIpOnLaunch: True
+      VpcId:
+        !Ref VPC
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}b
+      MapPublicIpOnLaunch: True
+      CidrBlock: !Select [ 3, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+  PrivateSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}c
+      CidrBlock: !Select [ 4, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+    Condition: MoreThanThreeAZs 
+  PublicSubnet3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Sub ${AWS::Region}c
+      MapPublicIpOnLaunch: True
+      CidrBlock: !Select [ 5, !Cidr [ !GetAtt VPC.CidrBlock, 6, 8]]
+      VpcId:
+        !Ref VPC
+    Condition: MoreThanThreeAZs
+#
+# End define Subnets
+#
+####
+#
+# Make subnets public
+#
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId:
+        Ref: InternetGateway
+      VpcId: 
+        Ref: VPC
+  RouteTablePublic:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        !Ref VPC
+  RouteToInternet:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        !Ref InternetGateway
+      RouteTableId:
+        !Ref RouteTablePublic
+  AttachPublicSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTablePublic
+      SubnetId:
+        !Ref PublicSubnet1
+  AttachPublicSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTablePublic
+      SubnetId:
+        !Ref PublicSubnet2
+#
+# End Make subnets public
+#
+####
+#
+# Create NAT Instance
+# ami-032df3592cc862884
+  NATSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Attach to NAT, allow internal traffic to internet
+      VpcId:
+        !Ref VPC
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        CidrIp: !GetAtt VPC.CidrBlock
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        CidrIp: 0.0.0.0/0
+  NATInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap [AMIRegionMap, !Ref "AWS::Region", AMIID]
+      InstanceType: t3.micro
+      SecurityGroupIds: 
+      - !GetAtt NATSecurityGroup.GroupId
+      SubnetId: 
+        Ref: PublicSubnet1
+      SourceDestCheck: False
+#
+# End create NAT
+#
+####
+#
+# Create Internal Routes
+#
+  RouteTableInternal:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        !Ref VPC
+  RouteToInternetPrivate:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      InstanceId:
+        !Ref NATInstance
+      RouteTableId:
+        !Ref RouteTableInternal
+  AttachPrivateSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTableInternal
+      SubnetId:
+        !Ref PrivateSubnet1
+  AttachPrivateSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        !Ref RouteTableInternal
+      SubnetId:
+        !Ref PrivateSubnet2
+Outputs:
+  VPCid:
+    Value: !Ref VPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPC'
+

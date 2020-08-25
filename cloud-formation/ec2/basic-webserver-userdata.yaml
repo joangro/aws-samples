@@ -26,7 +26,8 @@ Resources:
       ImageId: 'ami-07d9160fa81ccffb5'
       InstanceType: !Ref InstanceType
       UserData: 
-        Fn::Base64: !Sub |
+        Fn::Base64: 
+          !Sub |
             #!/bin/bash
             yum update -y && yum install httpd -y
             systemctl start httpd && systemctl enable httpd
