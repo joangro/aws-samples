@@ -2,9 +2,15 @@ Parameters:
   Subnet:
     Type: AWS::EC2::Subnet::Id
     Description: Subnet to use
+    Default: subnet-2447406c
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
     Description: Key name to ssh onto the instance
+    Default: main-linux
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC To use in the instance
+    Default: vpc-e8758e91
 Resources:
   Instance:
     Type: AWS::EC2::Instance
@@ -15,21 +21,19 @@ Resources:
             - php
             - httpd
         httpd:
-          commands:
-            01_update:
-              command: yum update -y
-            02_install_httpd:
-              command: yum install httpd -y 
-            03_start_httpd: 
-              command: systemctl start httpd
-            04_enable_httpd:
-              command: systemctl enable httpd
+          packages:
+            yum:
+              httpd: []
+          services:
+            sysvinit:
+              httpd:
+                enabled: True
+                ensureRunning: True
         php:
-          commands:
-            01_update:
-              command:  yum update -y
-            02_install_php:
-             command:  yum install php -y
+          packages:
+            yum:
+              php: []
+
     Properties:
       SubnetId:
         !Ref Subnet
@@ -59,7 +63,7 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-      VpcId: vpc-0f989b80e6cf29a1d
+      VpcId: !Ref VPCId
 
   ELB:
     Type: AWS::ElasticLoadBalancing::LoadBalancer

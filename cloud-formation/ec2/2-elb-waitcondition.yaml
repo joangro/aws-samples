@@ -5,6 +5,10 @@ Parameters:
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
     Description: Key name to ssh onto the instance
+  VPCId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC To use in the instance
+    Default: vpc-e8758e91
 Resources:
   Instance:
     Type: AWS::EC2::Instance
@@ -46,7 +50,7 @@ Resources:
              - '/opt/aws/bin/cfn-init -v --stack '
              - !Ref 'AWS::StackId'
              - ' --resource Instance --configsets install --region '
-             - !Ref 'AWS::Region'
+             - !Ref AWS::Region
              - " && data='{\"Status\" : \"SUCCESS\",\"Reason\" : \"Configuration Complete\",\"UniqueId\" : \"$(date +%s)\"}' && echo $data > /tmp/success && sleep 30 && "
              - ' curl -T /tmp/success "'
              - !Ref WaitConditionHandle
@@ -71,7 +75,7 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: 0.0.0.0/0
-      VpcId: vpc-0ec36d03d49807b45
+      VpcId: !Ref VPCId
 
   ELB:
     Type: AWS::ElasticLoadBalancing::LoadBalancer

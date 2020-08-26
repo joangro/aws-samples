@@ -47,5 +47,10 @@ Resources:
 Outputs:
   AllocatedEIP:
     Value: !Sub
-        - 'Allocated IP is ${IP}'
-        - { IP: !Ref WebserverEIP }
+#        - 'Allocated IP is ${IP}'
+#        - { IP: !Ref WebserverEIP }
+         - 'Allocated IP is ${IP} with allocation ID ${ALLOC}'
+         - IP: !Ref WebserverEIP
+           ALLOC: 
+             !GetAtt WebserverEIP.AllocationId
+
