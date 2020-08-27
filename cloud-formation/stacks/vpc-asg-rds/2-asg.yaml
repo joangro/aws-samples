@@ -1,0 +1,42 @@
+Parameters:
+  VPC:
+    Type: String
+    Description: VPC to create the instance on
+    Default: vpc-0f67a5ec4d0bca1cb
+  SUBNET:
+    Type: String
+    Default: subnet-07d79ffa4eb72619d
+  ENV:
+    Type: String
+    Default: Dev
+  ZONE:
+    Type: String
+    Default: eu-west-1a
+Conditions:
+  Dev:
+    !Equals [ !Ref ENV, "Dev"]
+  Prod:
+    !Equals [ !Ref ENV, "Prod"]
+Resources:
+  Template:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: ami-047bb4163c506cd98
+        InstanceType: !If [ Dev, t3.micro, t3.medium]
+  ASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties: 
+      AvailabilityZones: 
+        - !Ref ZONE
+      LaunchTemplate:
+        LaunchTemplateId: !Ref Template
+        Version: !GetAtt Template.LatestVersionNumber
+      MinSize: 1
+      MaxSize: 1
+      DesiredCapacity: 1
+
+
+      
+
+

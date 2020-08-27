@@ -1,0 +1,58 @@
+Parameters:
+  CidrRange:
+    Type: String
+    Description: Input CIDR IP without the range
+    Default: 10.5.0.0
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 
+        Fn::Join: [ '', [ !Ref CidrRange, "/16"]]
+      EnableDnsHostnames: True
+      EnableDnsSupport: True
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Select [ 0, !Cidr [ !GetAtt VPC.CidrBlock, 1, 8]]
+      MapPublicIpOnLaunch: True
+      VpcId: !Ref VPC
+  IGW:
+    Type: AWS::EC2::InternetGateway
+  AssociateIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref IGW
+      VpcId: !Ref VPC
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+  IGWRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref IGW
+      RouteTableId: !Ref RouteTable
+  AssociateRouteTable:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref RouteTable
+  CreateASG:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://aws-noejoan-templates.s3-eu-west-1.amazonaws.com/stacks/vpc-asg-rds/2-asg.yaml
+      Parameters:
+        VPC: !Ref VPC
+        SUBNET: !Ref PublicSubnet
+        ZONE: !GetAtt PublicSubnet.AvailabilityZone
+Outputs:
+  VPCID:
+    Value: !Ref VPC
+    Export:
+      Name: !Sub AWS::StackName-VPC
+  SUBNET:
+    Value: !Ref PublicSubnet
+    Export:
+      Name: !Sub AWS::StackName-SUBNET
