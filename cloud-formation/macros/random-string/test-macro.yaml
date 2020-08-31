@@ -1,0 +1,9 @@
+Resources:
+  Unused:
+    Type: AWS::CloudFormation::WaitConditionHandle
+Outputs:
+  Test:
+    Value:
+      Fn::Transform:
+      - Name: RandomString
+

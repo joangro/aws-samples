@@ -22,7 +22,8 @@ Resources:
     Type: AWS::EC2::LaunchTemplate
     Properties:
       LaunchTemplateData:
-        ImageId: ami-047bb4163c506cd98
+        #ImageId: ami-047bb4163c506cd98
+        ImageId: ami-07ee42ba0209b6d77
         InstanceType: !If [ Dev, t3.micro, t3.medium]
   ASG:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -33,8 +34,16 @@ Resources:
         LaunchTemplateId: !Ref Template
         Version: !GetAtt Template.LatestVersionNumber
       MinSize: 1
-      MaxSize: 1
-      DesiredCapacity: 1
+      MaxSize: 3
+      #DesiredCapacity: 1
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MaxBatchSize: 2
+        MinInstancesInService: 1
+        SuspendProcesses:
+          - HealthCheck
+          - InstanceRefresh
+          - AlarmNotification
 
 
       

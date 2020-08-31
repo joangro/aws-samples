@@ -1,0 +1,4 @@
+Transform:
+  Name: AWS::Include
+  Parameters:
+    Location: s3://aws-noejoan-templates/includes/root-include/includes.yaml

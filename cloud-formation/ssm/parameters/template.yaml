@@ -1,0 +1,7 @@
+Parameters:
+  StringList:
+    Type: 'AWS::SSM::Parameter::Value<List<String>>'
+    Default: list
+Resources:
+  NotUsed:
+    Type: AWS::CloudFormation::WaitConditionHandle
