@@ -1,0 +1,69 @@
+Resources:
+  CustomResourceTest:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          import json
+          import cfnresponse
+          import boto3
+          from botocore.config import Config
+
+          def handler(event, context):
+              config=Config(region_name = 'us-east-1')
+              ec2 = boto3.resource('ec2', config=config)
+              us_al2_ami='ami-02354e95b39ca8dec'
+              try:
+                  ec2.create_instances(
+                      ImageId=us_al2_ami,
+                      MaxCount=1,
+                      MinCount=1,
+                      InstanceType='t3.micro'
+                  )
+              except Exception as e:
+                  print('Exception raised: ' + str(e))
+                  cfnresponse.send(event, context, cfnresponse.FAILED, responseData={})
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData={})
+      Runtime: python3.7
+      Handler: index.handler
+      Timeout: 60
+      Role: !GetAtt LambdaExecutionRole.Arn
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: root
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
+          - Effect: Allow
+            Action:
+            - ec2:*
+            Resource: "*"
+Outputs:
+  ExportLambdaARN:
+    Value: !GetAtt CustomResourceTest.Arn
+    Export:
+      Name: CustomLambdaResourceEC2
+  PrintLambdaARN:
+    Value: !Join
+      - ""
+      - - 'Lambda ARN: '
+        - !GetAtt CustomResourceTest.Arn
+

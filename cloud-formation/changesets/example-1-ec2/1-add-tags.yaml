@@ -1,0 +1,9 @@
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-07d9160fa81ccffb5
+      InstanceType: t3.micro
+      Tags:
+        - Key: test
+          Value: tset

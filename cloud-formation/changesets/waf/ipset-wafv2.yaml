@@ -1,0 +1,9 @@
+Resources:
+  WAFV2:
+    Type: AWS::WAFv2::IPSet
+    Properties:
+      Addresses:
+        - 192.0.2.34/32
+      IPAddressVersion: IPV4
+      Scope: REGIONAL
+

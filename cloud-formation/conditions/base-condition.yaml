@@ -1,0 +1,17 @@
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  NeedsRoute53:
+    Description: "Set to true if using Route53"
+    AllowedValues:
+      - True
+      - False
+    Type: String
+
+Conditions:
+  DeployRoute53:
+    !Equals [!Ref NeedsRoute53, true]
+
+Resources:
+  WCH:
+    Type: AWS::CloudFormation::WaitConditionHandle
+    Condition: DeployRoute53

@@ -1,0 +1,9 @@
+
+> nodejs-express@0.0.0 start /home/ec2-user/aws/beanstalk/nodejs-express
+> node ./bin/www
+
+
+> nodejs-express@0.0.0 start /home/ec2-user/aws/beanstalk/nodejs-express
+> node ./bin/www
+
+[0mGET / [32m200 [0m180.616 ms - 170[0m

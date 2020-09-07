@@ -1,0 +1,10 @@
+[
+	{
+		"Action": "DELETE",
+        	"IPSetDescriptor":
+        	{
+			"Type": "IPV4",
+			"Value": "192.0.2.44/32"
+		}
+	}
+]

@@ -1,0 +1,10 @@
+Resources:
+  MyIpSet2:
+    Type: AWS::WAFRegional::IPSet
+    Properties:
+      IPSetDescriptors:
+        - Value: 192.0.2.44/32
+          Type: IPV4
+      Name: Test
+
+
