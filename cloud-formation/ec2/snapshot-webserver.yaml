@@ -10,7 +10,8 @@ Parameters:
       - t2.micro
       - m1.small
       - m1.large
-    Default: t2.micro
+      - r4.large
+    Default: r4.large
   MyKeyName:
     Description: Key name to use to SSH onto the instance
     Type: AWS::EC2::KeyPair::KeyName
@@ -26,12 +27,30 @@ Resources:
       SecurityGroups:
         - !Ref WebserverSecurityGroup
       KeyName: !Ref MyKeyName
-      ImageId: 'ami-07d9160fa81ccffb5'
+      #ImageId: 'ami-07d9160fa81ccffb5'
+      ImageId: 'ami-0d2c463f19ec3d2a7'
       InstanceType: !Ref InstanceType
       #SubnetId: !Ref MySubnetID
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            DeleteOnTermination: false
       UserData: !Base64 |
-        #!/bin/bash -x
-        shutdown -h
+        #ini-incremental
+        ClusterManagerIpAddress = 172.35.33.183
+        SbcDeviceRole = 1
+        McProfile = 1
+        AcousticEchoSuppressorSupport = 1
+        EnableDSPAGC = 1
+        EnableDSPIPMDetectors = 1
+        MaxTpncpCommandsToExecute = 20
+        [ WebUsers ]
+        FORMAT WebUsers_Index = WebUsers_Username, WebUsers_Password, WebUsers_Status, WebUsers_PwAgeInterval, WebUsers_SessionLimit, WebUsers_CliSessionLimit, WebUsers_SessionTimeout, WebUsers_BlockTime, WebUsers_UserLevel, WebUsers_PwNonce;
+        WebUsers 0 = "acladmin", "cbba6642d0ef1dea33b85b419b8241084af250f955678d4168dcb08eb09e892a", 1, 0, 5, -1, 15, 60, 200, "9D8YbRLg19F6IahRxGLbf0NJ4wA9GXzh";
+        [ \WebUsers ]
+        McMaxPPSLimit = 350
+        #network_layout=4
+        #cloud-end
   WebserverSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:

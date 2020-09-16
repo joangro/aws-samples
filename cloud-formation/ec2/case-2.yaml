@@ -1,0 +1,46 @@
+Parameters:
+  ami:
+    Type: 'String'
+    Default: "ami-0d2c463f19ec3d2a7"
+  keyName:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: main-linux
+  instanceType:
+    Default: c4.4xlarge
+    Type: String
+Resources:
+  mc:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      #PlacementGroupName: test
+      AvailabilityZone: eu-west-1b
+      ImageId:
+        Ref: ami
+      KeyName:
+        Ref: keyName
+      InstanceType:
+        Ref: instanceType
+      UserData:
+        'Fn::Base64': |
+          #ini-incremental
+          ClusterManagerIpAddress = 172.35.39.72
+          SbcDeviceRole = 1
+          McProfile = 0
+          AcousticEchoSuppressorSupport = 1
+          EnableDSPAGC = 1
+          EnableDSPIPMDetectors = 1
+          MaxTpncpCommandsToExecute = 20
+          [ WebUsers ]
+          FORMAT WebUsers_Index = WebUsers_Username, WebUsers_Password, WebUsers_Status, WebUsers_PwAgeInterval, WebUsers_SessionLimit, WebUsers_CliSessionLimit, WebUsers_SessionTimeout, WebUsers_BlockTime, WebUsers_UserLevel, WebUsers_PwNonce;
+          WebUsers 0 = "acladmin", "b6a0a89591c4366896d6e840828b6e96767ae4f9576c9bea90260d7dabe4fdd7", 1, 0, 5, -1, 15, 60, 200, "CziRb2h8GK6rPyPrUwD2BP525fc8Qxmg";
+          [ \WebUsers ]
+          McMaxPPSLimit = 280
+          #network_layout=4
+          #cloud-end
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeType: gp2
+            #DeleteOnTermination: false
+
+

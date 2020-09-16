@@ -1,0 +1,239 @@
+{
+    "Resources": {
+        "eth1EIPAssociation": {
+            "Properties": {
+                "AllocationId": {
+                    "Fn::GetAtt": [
+                        "eth1EIP",
+                        "AllocationId"
+                    ]
+                },
+                "NetworkInterfaceId": {
+                    "Ref": "eth1"
+                }
+            },
+            "DependsOn": [
+                "mc",
+                "eth1",
+                "eth1EIP"
+            ],
+            "Type": "AWS::EC2::EIPAssociation"
+        },
+        "mc": {
+            "Properties": {
+                "InstanceType": {
+                    "Ref": "instanceType"
+                },
+                "IamInstanceProfile": {
+                    "Ref": "iamRole"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TEMP-CE-1-mc-1"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "VolumeType": "gp2"
+                        }
+                    }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#ini-incremental\n",
+                                "ClusterManagerIpAddress = 172.35.33.183\n",
+                                "SbcDeviceRole = 1\n",
+                                "McProfile = 0\n",
+                                "AcousticEchoSuppressorSupport = 1\n",
+                                "EnableDSPAGC = 1\n",
+                                "EnableDSPIPMDetectors = 1\n",
+                                "MaxTpncpCommandsToExecute = 20\n",
+                                "[ WebUsers ]\n",
+                                "FORMAT WebUsers_Index = WebUsers_Username, WebUsers_Password, WebUsers_Status, WebUsers_PwAgeInterval, WebUsers_SessionLimit, WebUsers_CliSessionLimit, WebUsers_SessionTimeout, WebUsers_BlockTime, WebUsers_UserLevel, WebUsers_PwNonce;\n",
+                                "WebUsers 0 = \"acladmin\", \"cbba6642d0ef1dea33b85b419b8241084af250f955678d4168dcb08eb09e892a\", 1, 0, 5, -1, 15, 60, 200, \"9D8YbRLg19F6IahRxGLbf0NJ4wA9GXzh\";\n",
+                                "[ \\WebUsers ]\n",
+                                "McMaxPPSLimit = 350\n",
+                                "#network_layout=4\n",
+                                "#cloud-end\n"
+                            ]
+                        ]
+                    }
+                },
+                "NetworkInterfaces": [
+                    {
+                        "DeviceIndex": 0,
+                        "NetworkInterfaceId": {
+                            "Ref": "eth0"
+                        }
+                    },
+                    {
+                        "DeviceIndex": 1,
+                        "NetworkInterfaceId": {
+                            "Ref": "eth1"
+                        }
+                    }
+                ],
+                "KeyName": {
+                    "Ref": "keyName"
+                },
+                "PlacementGroupName": "test",
+                "ImageId": {
+                    "Ref": "ami"
+                }
+            },
+            "Type": "AWS::EC2::Instance"
+        },
+        "eth1": {
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "oamSubnetID"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TEMP-CE-1-mc-1-eth1"
+                    },
+                    {
+                        "Key": "subnet",
+                        "Value": "main"
+                    }
+                ],
+                "Description": "TEMP-CE-1-mc-1 interface for main subnet (eth1)",
+                "SourceDestCheck": "true",
+                "GroupSet": [
+                    {
+                        "Ref": "mediaSecurityGroup"
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::NetworkInterface"
+        },
+        "eth0": {
+            "Properties": {
+                "SubnetId": {
+                    "Ref": "clusterSubnetID"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TEMP-CE-1-mc-1-eth0"
+                    },
+                    {
+                        "Key": "subnet",
+                        "Value": "cluster"
+                    }
+                ],
+                "Description": "TEMP-CE-1-mc-1 interface for cluster subnet (eth0)",
+                "SourceDestCheck": "true",
+                "GroupSet": [
+                    {
+                        "Ref": "clusterSecurityGroup"
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::NetworkInterface"
+        },
+        "recoveryTestAlarm": {
+            "Properties": {
+                "Namespace": "AWS/EC2",
+                "AlarmDescription": "TEMP-CE-1-mc-1 automatic recovery",
+                "Dimensions": [
+                    {
+                        "Name": "InstanceId",
+                        "Value": {
+                            "Ref": "mc"
+                        }
+                    }
+                ],
+                "Period": "600",
+                "ComparisonOperator": "GreaterThanThreshold",
+                "Threshold": "0",
+                "AlarmActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:automate:",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                ":ec2:recover"
+                            ]
+                        ]
+                    }
+                ],
+                "MetricName": "StatusCheckFailed_System",
+                "EvaluationPeriods": "1",
+                "Statistic": "Minimum"
+            },
+            "Type": "AWS::CloudWatch::Alarm"
+        },
+        "eth1EIP": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "TEMP-CE-1-mc-1-eth1"
+                    }
+                ],
+                "Domain": "vpc"
+            },
+            "Type": "AWS::EC2::EIP"
+        }
+    },
+    "Description": "AudioCodes Mediant CE SBC - Media Component",
+    "Parameters": {
+        "instanceType": {
+            "Default": "r4.large",
+            "Type": "String"
+        },
+        "iamRole": {
+            "Default": "",
+            "Type": "String"
+        },
+        "keyName": {
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        },
+        "clusterSubnetID": {
+            "Type": "AWS::EC2::Subnet::Id"
+        },
+        "oamSubnetID": {
+            "Type": "AWS::EC2::Subnet::Id"
+        },
+        "ami": {
+            "Type": "AWS::EC2::Image::Id"
+        },
+        "mediaSecurityGroup": {
+            "Type": "String"
+        },
+        "clusterSecurityGroup": {
+            "Type": "String"
+        },
+        "userData": {
+            "Type": "String"
+        }
+    },
+    "Outputs": {
+        "mcId": {
+            "Description": "mc-1 instance id",
+            "Value": {
+                "Ref": "mc"
+            }
+        },
+        "oamIP": {
+            "Description": "mc-1 management IP address",
+            "Value": {
+                "Fn::GetAtt": [
+                    "eth1",
+                    "PrimaryPrivateIpAddress"
+                ]
+            }
+        }
+    }
+}

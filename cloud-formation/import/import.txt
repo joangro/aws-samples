@@ -1,0 +1,9 @@
+[
+  {
+    "ResourceType":"AWS::S3::Bucket",
+    "LogicalResourceId":"WCH",
+    "ResourceIdentifier": {
+		"BucketName": "noejoan-nht"
+	}
+    }
+]

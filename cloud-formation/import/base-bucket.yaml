@@ -1,0 +1,9 @@
+Resources:
+  BaseBucket:
+    Type: AWS::S3::Bucket
+
+  WCH:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: noejoan-nht
+    DeletionPolicy: Retain
