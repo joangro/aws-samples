@@ -1,0 +1,8 @@
+{
+  "Statement": {
+    "Effect": "Allow",
+    "Principal": { "Service": "logs.amazonaws.com" },
+    "Action": "sts:AssumeRole"
+  }
+}
+

@@ -2,6 +2,6 @@ Resources:
   CreateInstanceUS:
     Type: Custom::CreateInstanceUS
     Properties:
-      #ServiceToken: arn:aws:lambda:eu-west-1:914609264432:function:CustomResourceEC2-CustomResourceTest-K73OS5U6ACA
-      ServiceToken: !ImportValue CustomLambdaResourceEC2
+      ServiceToken: arn:aws:lambda:eu-west-1:914609265432:function:CustomResourceEC2-CustomResourceTest-K73OS5U6ACA
+      #ServiceToken: !ImportValue CustomLambdaResourceEC2
 

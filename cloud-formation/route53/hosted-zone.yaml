@@ -1,0 +1,9 @@
+Resources:
+  DNS: 
+    Type: "AWS::Route53::HostedZone"
+    Properties: 
+      HostedZoneConfig: 
+        Comment: 'My hosted zone for example.com'
+      Name: 'example.com'
+      DelegationSetId: 'doesntexist'
+

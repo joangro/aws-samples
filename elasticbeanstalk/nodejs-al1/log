@@ -1,0 +1,183 @@
+2020-10-21 21:33:43,454 (DEBUG) cement.core.foundation : laying cement for the 'eb' application
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'pre_setup'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'post_setup'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'pre_run'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'post_run'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'pre_argument_parsing'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'post_argument_parsing'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'pre_close'
+2020-10-21 21:33:43,454 (DEBUG) cement.core.hook : defining hook 'post_close'
+2020-10-21 21:33:43,455 (DEBUG) cement.core.hook : defining hook 'signal'
+2020-10-21 21:33:43,455 (DEBUG) cement.core.hook : defining hook 'pre_render'
+2020-10-21 21:33:43,455 (DEBUG) cement.core.hook : defining hook 'post_render'
+2020-10-21 21:33:43,455 (DEBUG) cement.core.hook : registering hook 'add_handler_override_options' from cement.core.foundation into hooks['post_setup']
+2020-10-21 21:33:43,455 (DEBUG) cement.core.hook : registering hook 'handler_override' from cement.core.foundation into hooks['post_argument_parsing']
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'extension' (IExtension)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'log' (ILog)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'config' (IConfig)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'mail' (IMail)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'plugin' (IPlugin)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'output' (IOutput)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'argument' (IArgument)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'controller' (IController)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : defining handler type 'cache' (ICache)
+2020-10-21 21:33:43,455 (DEBUG) cement.core.handler : registering handler '<class 'cement.core.extension.CementExtensionHandler'>' into handlers['extension']['cement']
+2020-10-21 21:33:43,469 (DEBUG) cement.ext.ext_plugin : plugin config dir /etc/eb/plugins.d does not exist.
+2020-10-21 21:33:43,469 (DEBUG) cement.ext.ext_plugin : plugin config dir /home/ec2-user/.eb/plugins.d does not exist.
+2020-10-21 21:33:43,478 (DEBUG) ebcli.core.hooks : -- EBCLI Version: 3.19.0
+2020-10-21 21:33:43,478 (DEBUG) ebcli.core.hooks : -- Python Version: 3.7.2 (default, Sep  1 2020, 09:36:24) 
+[GCC 7.3.1 20180712 (Red Hat 7.3.1-9)]
+2020-10-21 21:33:43,479 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,482 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,485 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,488 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,491 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,494 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,497 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,500 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,503 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,507 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,510 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,513 (DEBUG) ebcli.lib.elasticbeanstalk : Inside list_platform_branches api wrapper
+2020-10-21 21:33:43,513 (DEBUG) ebcli.lib.aws : Creating new Botocore Session
+2020-10-21 21:33:43,513 (DEBUG) ebcli.lib.aws : Botocore version: 1.17.63
+2020-10-21 21:33:43,523 (DEBUG) ebcli.lib.aws : Creating new Botocore Client for elasticbeanstalk
+2020-10-21 21:33:43,554 (DEBUG) ebcli.lib.aws : Successfully created session for elasticbeanstalk
+2020-10-21 21:33:43,554 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, list_platform_branches) to region: eu-west-1 with args:{'Filters': [{'Attribute': 'BranchName', 'Operator': '=', 'Values': ['Node.js running on 64bit Amazon Linux']}]}
+2020-10-21 21:33:43,605 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,605 (DEBUG) ebcli.lib.aws : Response: {'PlatformBranchSummaryList': [{'PlatformName': 'Node.js', 'BranchName': 'Node.js running on 64bit Amazon Linux', 'BranchOrder': '10000', 'LifecycleState': 'Supported', 'SupportedTierList': ['WebServer/Standard', 'Worker/SQS/HTTP']}], 'ResponseMetadata': {'RequestId': 'a11f2848-f908-4699-b1f7-bb7295536d4d', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:43 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,605 (DEBUG) ebcli.lib.elasticbeanstalk : Inside list_platform_versions api wrapper
+2020-10-21 21:33:43,605 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, list_platform_versions) to region: eu-west-1 with args:{'Filters': [{'Type': 'PlatformBranchName', 'Operator': '=', 'Values': ['Node.js running on 64bit Amazon Linux']}]}
+2020-10-21 21:33:43,645 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,645 (DEBUG) ebcli.lib.aws : Response: {'PlatformSummaryList': [{'PlatformArn': 'arn:aws:elasticbeanstalk:eu-west-1::platform/Node.js running on 64bit Amazon Linux/4.16.0', 'PlatformOwner': 'AWSElasticBeanstalk', 'PlatformStatus': 'Ready', 'PlatformCategory': 'Node.js', 'OperatingSystemName': 'Amazon Linux', 'OperatingSystemVersion': '2018.03', 'SupportedTierList': ['WebServer/Standard', 'Worker/SQS/HTTP'], 'SupportedAddonList': ['Log/S3', 'Monitoring/Healthd', 'WorkerDaemon/SQSD'], 'PlatformLifecycleState': 'Recommended', 'PlatformVersion': '4.16.0', 'PlatformBranchName': 'Node.js running on 64bit Amazon Linux', 'PlatformBranchLifecycleState': 'Supported'}], 'ResponseMetadata': {'RequestId': '21513f8a-0e52-4462-8553-9585e286b72b', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:42 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,645 (DEBUG) ebcli.lib.elasticbeanstalk : Inside describe_platform_version api wrapper
+2020-10-21 21:33:43,645 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, describe_platform_version) to region: eu-west-1 with args:{'PlatformArn': 'arn:aws:elasticbeanstalk:eu-west-1::platform/Node.js running on 64bit Amazon Linux/4.16.0'}
+2020-10-21 21:33:43,695 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,695 (DEBUG) ebcli.lib.aws : Response: {'PlatformDescription': {'PlatformArn': 'arn:aws:elasticbeanstalk:eu-west-1::platform/Node.js running on 64bit Amazon Linux/4.16.0', 'PlatformOwner': 'AWSElasticBeanstalk', 'PlatformName': 'Node.js running on 64bit Amazon Linux', 'PlatformVersion': '4.16.0', 'SolutionStackName': '64bit Amazon Linux 2018.03 v4.16.0 running Node.js', 'PlatformStatus': 'Ready', 'DateCreated': datetime.datetime(2020, 10, 6, 18, 30, 11, 184000, tzinfo=tzlocal()), 'DateUpdated': datetime.datetime(2020, 10, 7, 20, 8, 0, 107000, tzinfo=tzlocal()), 'PlatformCategory': 'Node.js', 'Description': '64bit Amazon Linux running Node.js', 'Maintainer': 'aws-elasticbeanstalk-platforms@amazon.com', 'OperatingSystemName': 'Amazon Linux', 'OperatingSystemVersion': '2018.03', 'ProgrammingLanguages': [{'Name': 'JavaScript'}], 'Frameworks': [{'Name': 'Node.js', 'Version': '4.8.7'}, {'Name': 'Node.js', 'Version': '4.9.1'}, {'Name': 'Node.js', 'Version': '5.12.0'}, {'Name': 'Node.js', 'Version': '6.15.1'}, {'Name': 'Node.js', 'Version': '6.16.0'}, {'Name': 'Node.js', 'Version': '6.17.0'}, {'Name': 'Node.js', 'Version': '6.17.1'}, {'Name': 'Node.js', 'Version': '7.10.1'}, {'Name': 'Node.js', 'Version': '8.14.0'}, {'Name': 'Node.js', 'Version': '8.15.0'}, {'Name': 'Node.js', 'Version': '8.15.1'}, {'Name': 'Node.js', 'Version': '8.16.0'}, {'Name': 'Node.js', 'Version': '8.16.1'}, {'Name': 'Node.js', 'Version': '8.16.2'}, {'Name': 'Node.js', 'Version': '8.17.0'}, {'Name': 'Node.js', 'Version': '10.14.1'}, {'Name': 'Node.js', 'Version': '10.15.0'}, {'Name': 'Node.js', 'Version': '10.15.1'}, {'Name': 'Node.js', 'Version': '10.15.3'}, {'Name': 'Node.js', 'Version': '10.16.0'}, {'Name': 'Node.js', 'Version': '10.16.1'}, {'Name': 'Node.js', 'Version': '10.16.2'}, {'Name': 'Node.js', 'Version': '10.16.3'}, {'Name': 'Node.js', 'Version': '10.17.0'}, {'Name': 'Node.js', 'Version': '10.18.0'}, {'Name': 'Node.js', 'Version': '10.18.1'}, {'Name': 'Node.js', 'Version': '10.19.0'}, {'Name': 'Node.js', 'Version': '10.20.0'}, {'Name': 'Node.js', 'Version': '10.20.1'}, {'Name': 'Node.js', 'Version': '10.21.0'}, {'Name': 'Node.js', 'Version': '10.22.0'}, {'Name': 'Node.js', 'Version': '10.22.1'}, {'Name': 'Node.js', 'Version': '12.14.0'}, {'Name': 'Node.js', 'Version': '12.14.1'}, {'Name': 'Node.js', 'Version': '12.15.0'}, {'Name': 'Node.js', 'Version': '12.16.1'}, {'Name': 'Node.js', 'Version': '12.16.2'}, {'Name': 'Node.js', 'Version': '12.16.3'}, {'Name': 'Node.js', 'Version': '12.18.0'}, {'Name': 'Node.js', 'Version': '12.18.1'}, {'Name': 'Node.js', 'Version': '12.18.2'}, {'Name': 'Node.js', 'Version': '12.18.3'}, {'Name': 'Node.js', 'Version': '12.18.4'}], 'CustomAmiList': [{'VirtualizationType': 'pv', 'ImageId': ''}, {'VirtualizationType': 'hvm', 'ImageId': 'ami-03080f6f5782bebdc'}], 'SupportedTierList': ['WebServer/Standard', 'Worker/SQS/HTTP'], 'SupportedAddonList': ['Log/S3', 'Monitoring/Healthd', 'WorkerDaemon/SQSD'], 'PlatformLifecycleState': 'Recommended', 'PlatformBranchName': 'Node.js running on 64bit Amazon Linux', 'PlatformBranchLifecycleState': 'Supported'}, 'ResponseMetadata': {'RequestId': 'ce468712-3da7-4277-91c7-adc7f50b038e', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:43 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,695 (DEBUG) ebcli.lib.elasticbeanstalk : Inside list_platform_branches api wrapper
+2020-10-21 21:33:43,695 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, list_platform_branches) to region: eu-west-1 with args:{'Filters': [{'Attribute': 'BranchName', 'Operator': '=', 'Values': ['Node.js running on 64bit Amazon Linux']}]}
+2020-10-21 21:33:43,715 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,715 (DEBUG) ebcli.lib.aws : Response: {'PlatformBranchSummaryList': [{'PlatformName': 'Node.js', 'BranchName': 'Node.js running on 64bit Amazon Linux', 'BranchOrder': '10000', 'LifecycleState': 'Supported', 'SupportedTierList': ['WebServer/Standard', 'Worker/SQS/HTTP']}], 'ResponseMetadata': {'RequestId': '5b40348c-2acf-4bb9-aaa8-9da51b212fba', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:43 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,715 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,719 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,719 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,719 (DEBUG) ebcli.lib.elasticbeanstalk : Inside get_storage_location api wrapper
+2020-10-21 21:33:43,719 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, create_storage_location) to region: eu-west-1 with args:{}
+2020-10-21 21:33:43,789 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,789 (DEBUG) ebcli.lib.aws : Response: {'S3Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'ResponseMetadata': {'RequestId': '29b788c1-3412-4d30-bc81-cf5885063b36', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:42 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,789 (DEBUG) ebcli.lib.aws : Creating new Botocore Client for s3
+2020-10-21 21:33:43,802 (DEBUG) ebcli.lib.aws : Successfully created session for s3
+2020-10-21 21:33:43,802 (DEBUG) ebcli.lib.aws : Making api call: (s3, put_object) to region: eu-west-1 with args:{'Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'Key': 'resources/templates/nodejs-al12/test', 'Body': <_io.BufferedReader name='/home/ec2-user/beanstalk/nodejs-al1/.elasticbeanstalk/saved_configs/test.cfg.yml'>}
+2020-10-21 21:33:43,849 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,849 (DEBUG) ebcli.lib.aws : Response: {'ResponseMetadata': {'RequestId': '28717D27B3C30C45', 'HostId': 'RZsh9kcbuD/5ajGQFILN4uK972ecsD9mLHYD/t+mLJUe4JwDkoUSIqPeCCTIHZ5uyUj/ymnm8G8=', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:44 GMT', 'RetryAttempts': 0}, 'ETag': '"150d71bfbb8bc8a7c72916c381acf5c9"'}
+2020-10-21 21:33:43,850 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,853 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,856 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,859 (DEBUG) ebcli.operations.createops : Resolving roles
+2020-10-21 21:33:43,859 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,860 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,863 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,866 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,869 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,872 (DEBUG) ebcli.operations.gitops : Branch not found
+2020-10-21 21:33:43,872 (INFO) eb : Creating new application version using project code
+2020-10-21 21:33:43,872 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,872 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,875 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,878 (DEBUG) ebcli.lib.elasticbeanstalk : Inside get_application_versions api wrapper
+2020-10-21 21:33:43,878 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, describe_application_versions) to region: eu-west-1 with args:{'ApplicationName': 'nodejs-al12', 'VersionLabels': ['app-201021_213343']}
+2020-10-21 21:33:43,916 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,916 (DEBUG) ebcli.lib.aws : Response: {'ApplicationVersions': [], 'ResponseMetadata': {'RequestId': '1e7ec2e7-7c6b-42aa-bae5-ab3700a6aa52', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:42 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,916 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,917 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,917 (INFO) eb : Creating zip using systems zip
+2020-10-21 21:33:43,917 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,917 (INFO) eb : Zipping up folder at location: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:43,917 (INFO) eb :  +adding: .//
+2020-10-21 21:33:43,917 (INFO) eb :   +adding: ./EBSampleApp-Nodejs.iml
+2020-10-21 21:33:43,917 (INFO) eb :   +adding: ./cron.yaml
+2020-10-21 21:33:43,918 (INFO) eb :   +adding: ./index.html
+2020-10-21 21:33:43,918 (INFO) eb :   +adding: ./package.json
+2020-10-21 21:33:43,918 (INFO) eb :   +adding: ./app.js
+2020-10-21 21:33:43,918 (INFO) eb :   -skipping: ./.gitignore
+2020-10-21 21:33:43,918 (INFO) eb :   +adding: ./nodejs-template-cli
+2020-10-21 21:33:43,919 (INFO) eb :   +adding: ./log
+2020-10-21 21:33:43,919 (INFO) eb :  +adding: ./.ebextensions/
+2020-10-21 21:33:43,919 (INFO) eb :   +adding: ./.ebextensions/logging.config
+2020-10-21 21:33:43,920 (INFO) eb :   -skipping: ./.elasticbeanstalk
+2020-10-21 21:33:43,920 (INFO) eb :   -skipping: ./.elasticbeanstalk/saved_configs
+2020-10-21 21:33:43,920 (INFO) eb :   -skipping: ./.elasticbeanstalk/downloads
+2020-10-21 21:33:43,920 (INFO) eb :   -skipping: ./.elasticbeanstalk/downloads/.ebextensions
+2020-10-21 21:33:43,920 (INFO) eb :   -skipping: ./.elasticbeanstalk/app_versions
+2020-10-21 21:33:43,920 (DEBUG) ebcli.core.fileoperations : File size: 6340
+2020-10-21 21:33:43,920 (DEBUG) ebcli.lib.elasticbeanstalk : Inside get_storage_location api wrapper
+2020-10-21 21:33:43,920 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, create_storage_location) to region: eu-west-1 with args:{}
+2020-10-21 21:33:43,988 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:43,988 (DEBUG) ebcli.lib.aws : Response: {'S3Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'ResponseMetadata': {'RequestId': 'a36aad18-d0f7-4f53-a992-caf5f7d807e9', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:43 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:43,988 (DEBUG) ebcli.lib.aws : Making api call: (s3, list_objects) to region: eu-west-1 with args:{'Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'Prefix': 'nodejs-al12/app-201021_213343.zip'}
+2020-10-21 21:33:44,004 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:44,004 (DEBUG) ebcli.lib.aws : Response: {'ResponseMetadata': {'RequestId': 'E742D29D592BB7DB', 'HostId': 'wxZ1scLwEtjTyQBNdOGvQAXQhLWHZD4EY+IZ9P+ytt+ir7riaYkF20HWaCdydA9q1f2MZo7NlBM=', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:44 GMT', 'RetryAttempts': 0}, 'IsTruncated': False, 'Marker': '', 'Name': 'elasticbeanstalk-eu-west-1-914609264432', 'Prefix': 'nodejs-al12/app-201021_213343.zip', 'MaxKeys': 1000, 'EncodingType': 'url'}
+2020-10-21 21:33:44,004 (INFO) eb : Uploading archive to s3 location: nodejs-al12/app-201021_213343.zip
+2020-10-21 21:33:44,004 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:44,004 (DEBUG) ebcli.lib.s3 : Upload Application Version. File size = 6340
+2020-10-21 21:33:44,004 (DEBUG) ebcli.lib.aws : Making api call: (s3, put_object) to region: eu-west-1 with args:{'Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'Key': 'nodejs-al12/app-201021_213343.zip', 'Body': <_io.BufferedReader name='/home/ec2-user/beanstalk/nodejs-al1/.elasticbeanstalk/app_versions/app-201021_213343.zip'>}
+2020-10-21 21:33:44,048 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:44,048 (DEBUG) ebcli.lib.aws : Response: {'ResponseMetadata': {'RequestId': '06F8C73B0CDF0F15', 'HostId': 'QysfDLA8TCHJdMyznWsPlnY6oCV66FCyKlbPbqB4ihUGpojEwTgFMQ6ePIJ1ACs2mBNC+g6PjmY=', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:45 GMT', 'RetryAttempts': 0}, 'ETag': '"e13c966be83f069dcebd270e12bf44e2"'}
+2020-10-21 21:33:44,048 (DEBUG) ebcli.core.fileoperations : Project root found at: /home/ec2-user/beanstalk/nodejs-al1
+2020-10-21 21:33:44,048 (INFO) eb : Creating AppVersion app-201021_213343
+2020-10-21 21:33:44,048 (DEBUG) ebcli.lib.elasticbeanstalk : Inside create_application_version api wrapper
+2020-10-21 21:33:44,048 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, create_application_version) to region: eu-west-1 with args:{'ApplicationName': 'nodejs-al12', 'VersionLabel': 'app-201021_213343', 'Process': False, 'Description': 'EB-CLI deploy', 'SourceBundle': {'S3Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'S3Key': 'nodejs-al12/app-201021_213343.zip'}}
+2020-10-21 21:33:44,294 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:44,294 (DEBUG) ebcli.lib.aws : Response: {'ApplicationVersion': {'ApplicationName': 'nodejs-al12', 'Description': 'EB-CLI deploy', 'VersionLabel': 'app-201021_213343', 'SourceBundle': {'S3Bucket': 'elasticbeanstalk-eu-west-1-914609264432', 'S3Key': 'nodejs-al12/app-201021_213343.zip'}, 'DateCreated': datetime.datetime(2020, 10, 21, 21, 33, 44, 192000, tzinfo=tzlocal()), 'DateUpdated': datetime.datetime(2020, 10, 21, 21, 33, 44, 192000, tzinfo=tzlocal()), 'Status': 'UNPROCESSED'}, 'ResponseMetadata': {'RequestId': '32710d33-b74d-4ab8-adea-efa65fccd230', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:43 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:44,294 (DEBUG) ebcli.lib.aws : Creating new Botocore Client for ec2
+2020-10-21 21:33:44,337 (DEBUG) ebcli.lib.aws : Successfully created session for ec2
+2020-10-21 21:33:44,338 (DEBUG) ebcli.lib.aws : Making api call: (ec2, describe_key_pairs) to region: eu-west-1 with args:{}
+2020-10-21 21:33:44,399 (DEBUG) ebcli.lib.aws : API call finished, status = 200
+2020-10-21 21:33:44,399 (DEBUG) ebcli.lib.aws : Response: {'KeyPairs': [{'KeyPairId': 'key-022b26d949697d3b0', 'KeyFingerprint': '53:39:7d:fb:b5:cb:c3:a5:97:1b:06:98:e3:81:e1:fd', 'KeyName': 'eksctl-apiserver-nodegroup-linux-nodes-53:39:7d:fb:b5:cb:c3:a5:97:1b:06:98:e3:81:e1:fd', 'Tags': []}, {'KeyPairId': 'key-0aa02da29859237a9', 'KeyFingerprint': '53:39:7d:fb:b5:cb:c3:a5:97:1b:06:98:e3:81:e1:fd', 'KeyName': 'eksctl-nht-testing-nodegroup-linux-nodes-53:39:7d:fb:b5:cb:c3:a5:97:1b:06:98:e3:81:e1:fd', 'Tags': []}, {'KeyPairId': 'key-09cd630b706512832', 'KeyFingerprint': 'e1:43:a9:9a:14:cb:81:3a:d2:fe:e6:73:d4:ef:a9:e6:41:11:3c:f4', 'KeyName': 'main-linux', 'Tags': []}], 'ResponseMetadata': {'RequestId': '3352c569-763c-4a19-93f8-6af70a74cc9d', 'HTTPStatusCode': 200, 'date': 'Wed, 21 Oct 2020 21:33:44 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:44,399 (INFO) eb : Creating new environment
+2020-10-21 21:33:44,399 (DEBUG) ebcli.lib.elasticbeanstalk : Inside create_environment api wrapper
+2020-10-21 21:33:44,399 (DEBUG) ebcli.lib.aws : Making api call: (elasticbeanstalk, create_environment) to region: eu-west-1 with args:{'ApplicationName': 'nodejs-al12', 'EnvironmentName': 'test2', 'OptionSettings': [{'Namespace': 'aws:autoscaling:launchconfiguration', 'OptionName': 'EC2KeyName', 'Value': 'main-linux'}], 'Description': 'Environment created from the EB CLI using "eb create"', 'TemplateName': 'test', 'VersionLabel': 'app-201021_213343'}
+2020-10-21 21:33:44,538 (DEBUG) ebcli.lib.aws : Response: {'Error': {'Type': 'Sender', 'Code': 'InvalidParameterValue'}, 'ResponseMetadata': {'RequestId': '58587f7d-2646-4176-9f10-83e6055222de', 'HTTPStatusCode': 400, 'date': 'Wed, 21 Oct 2020 21:33:44 GMT', 'RetryAttempts': 0}}
+2020-10-21 21:33:44,538 (DEBUG) ebcli.lib.aws : API call finished, status = 400
+2020-10-21 21:33:44,538 (DEBUG) ebcli.lib.aws : Received a 400 Error
+2020-10-21 21:33:44,540 (INFO) eb : Traceback (most recent call last):
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/lib/aws.py", line 212, in make_api_call
+    response_data = operation(**operation_options)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/botocore/client.py", line 337, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/botocore/client.py", line 656, in _make_api_call
+    raise error_class(parsed_response, operation_name)
+botocore.exceptions.ClientError: An error occurred (InvalidParameterValue) when calling the CreateEnvironment operation: Unknown
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/core/ebrun.py", line 62, in run_app
+    app.run()
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/cement/core/foundation.py", line 797, in run
+    return_val = self.controller._dispatch()
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/cement/core/controller.py", line 472, in _dispatch
+    return func()
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/cement/core/controller.py", line 478, in _dispatch
+    return func()
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/core/abstractcontroller.py", line 92, in default
+    self.do_command()
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/controllers/create.py", line 287, in do_command
+    source=source)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/operations/createops.py", line 106, in make_new_env
+    interactive=interactive)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/operations/createops.py", line 223, in create_env
+    return elasticbeanstalk.create_environment(env_request)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/lib/elasticbeanstalk.py", line 341, in create_environment
+    result = _make_api_call('create_environment', **kwargs)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/lib/elasticbeanstalk.py", line 39, in _make_api_call
+    **operation_options)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/lib/aws.py", line 221, in make_api_call
+    _handle_response_code(e.response, attempt, aggregated_error_message)
+  File "/home/ec2-user/.ebcli-virtual-env/lib/python3.7/site-packages/ebcli/lib/aws.py", line 279, in _handle_response_code
+    raise error
+ebcli.lib.aws.InvalidParameterValueError
+
+Creating application version archive "app-201021_213343".
+Uploading nodejs-al12/app-201021_213343.zip to S3. This may take a while.
+Upload Complete.

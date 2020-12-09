@@ -1,0 +1,17 @@
+{
+	"AWSEBDockerrunVersion": "1",
+	"Authentication": {
+		"Bucket": "elasticbeanstalk-eu-west-1-914609264432",
+		"Key": "Docker-Auth/dockercfg"
+	},
+	"Image": {
+		"Name": "joangro/nginx",
+		"Update": "true"
+	},
+	"Ports": [
+	{
+		"ContainerPort": "80"
+	}
+	],
+	"Logging": "/var/log/nginx"
+}

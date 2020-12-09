@@ -1,0 +1,6 @@
+Resources:
+  Topic:
+    Type: AWS::SNS::Topic
+    Properties:
+      ContentBasedDeduplication: false
+      FifoTopic: true

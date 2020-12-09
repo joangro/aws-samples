@@ -1,0 +1,6 @@
+﻿<parameters>
+  <parameter name="IIS Web Application Name" defaultValue="Default Web Site" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\git\\aws\\AWSDotNetSDKAndTools\\vidro\\AWSBeanstalkHelloWorld\\AWSBeanstalkHelloWorldWebApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\git\\aws\\AWSDotNetSDKAndTools\\vidro\\AWSBeanstalkHelloWorld\\AWSBeanstalkHelloWorldWebApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+</parameters>

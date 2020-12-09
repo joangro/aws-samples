@@ -1,0 +1,23 @@
+{
+    "Resources": {
+        "ProductActivationSNSTopicB6811103": {
+            "Type": "AWS::SNS::Topic",
+            "Properties": {
+                "ContentBasedDeduplication": false,
+                "FifoTopic": true,
+                "TopicName": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "MyTopicName-",
+                            {
+                                "Fn::Sub": "${AWS::StackName}"
+                            },
+                            ".fifo"
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+Resources:
+  TGW:
+    Type: AWS::EC2::Route
+    Properties:
+      TransitGatewayId: tgw-0fe228ef0ca0439d8
+      DestinationCidrBlock: 10.115.34.0/20
+      RouteTableId: rtb-04fe4b71029e43b6c

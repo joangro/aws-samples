@@ -1,0 +1,9 @@
+﻿<parameters>
+  <parameter name="IIS Web Application Name" defaultValue="Default Web Site" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\V23203\\Source\\Repos\\SampleSQLConnectionApp\\SampleSQLConnectionApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\V23203\\Source\\Repos\\SampleSQLConnectionApp\\SampleSQLConnectionApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="GRDWConnection-Web.config Connection String" defaultValue="Data Source=localhost;Initial Catalog=GRDW;Integrated Security=True">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\V23203\\Source\\Repos\\SampleSQLConnectionApp\\SampleSQLConnectionApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='GRDWConnection']/@connectionString" />
+  </parameter>
+</parameters>

@@ -1,0 +1,16 @@
+Parameters:
+  Stage:
+    Type: String
+    Default: Stage
+  Region:
+    Type: String
+    Default: eu-west-2
+  ConfigFile:
+    Type: String
+    Default: config.cfg
+  CognitoUserPool:
+    Type: String
+Resources:
+  WCH:
+    Type: AWS::CloudFormation::WaitConditionHandle
+

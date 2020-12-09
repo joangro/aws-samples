@@ -18,7 +18,7 @@ Parameters:
   MySubnetID:
     Description: Subnet where the instance will be launched
     Type: AWS::EC2::Subnet::Id
-    Default: subnet-0bbb070737182da69
+    Default: subnet-d2c4b288
 Resources:
   EC2Webserver:
     Type: 'AWS::EC2::Instance'
@@ -29,9 +29,6 @@ Resources:
       ImageId: 'ami-07d9160fa81ccffb5'
       InstanceType: !Ref InstanceType
       #SubnetId: !Ref MySubnetID
-      UserData: !Base64 |
-        #!/bin/bash -x
-        shutdown -h
   WebserverSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -47,3 +44,5 @@ Resources:
           ToPort: '80'
           CidrIp: 0.0.0.0/0
 
+  WCH:
+    Type: AWS::CloudFormation::WaitConditionHandle

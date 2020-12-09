@@ -22,7 +22,8 @@ Resources:
                   )
               except Exception as e:
                   print('Exception raised: ' + str(e))
-                  cfnresponse.send(event, context, cfnresponse.FAILED, responseData={})
+                  #cfnresponse.send(event, context, cfnresponse.FAILED, responseData={})
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData={})
               cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData={})
       Runtime: python3.7
       Handler: index.handler

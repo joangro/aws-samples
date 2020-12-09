@@ -1,0 +1,20 @@
+Resources:
+  VPNConnection:
+    Type: AWS::EC2::VPNConnection
+    Properties:
+      CustomerGatewayId: !Ref CSTGateway
+      VpnGatewayId: !Ref VPNGW
+      Type: ipsec.1
+      #VpnTunnelOptionsSpecifications:
+      #  - PreSharedKey: 123456712345678
+      #    TunnelInsideCidr: 169.254.50.0/30
+  CSTGateway:
+    Type: AWS::EC2::CustomerGateway
+    Properties:
+      BgpAsn: 65000
+      IpAddress: 1.1.1.1
+      Type: ipsec.1
+  VPNGW:
+    Type: AWS::EC2::VPNGateway
+    Properties:
+      Type: ipsec.1

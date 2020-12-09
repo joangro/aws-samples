@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters: 
+  LambdaEdgeStackName: 
+    Description: The name of the LambdaEdge stack to apply the subscription filter to.
+    Type: String
+    MinLength: 1
+    Default: test
+
+Resources:
+  SubscriptionFilter:
+    Type: AWS::Logs::SubscriptionFilter
+    Properties: 
+        DestinationArn: 'arn:aws:firehose:eu-west-1:914609264432:deliverystream/test'
+        FilterPattern: ''
+        LogGroupName: !Ref CloudWatchLogGroup
+        RoleArn: 'arn:aws:iam::914609264432:role/CWLtoKinesisFirehoseRole'
+    DependsOn: CloudWatchLogGroup
+
+  # Doesn't work if one LogGroup is present...
+  CloudWatchLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties: 
+      LogGroupName: !Sub '/aws/lambda/eu-west-1/test'
+
