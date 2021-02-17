@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("source-map-support/register");
+const cdk = require("@aws-cdk/core");
+const spot_fargate_stack_1 = require("../lib/spot-fargate-stack");
+const app = new cdk.App();
+new spot_fargate_stack_1.SpotFargateStack(app, 'SpotFargateStack');
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3BvdC1mYXJnYXRlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsic3BvdC1mYXJnYXRlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLHVDQUFxQztBQUNyQyxxQ0FBcUM7QUFDckMsa0VBQTZEO0FBRTdELE1BQU0sR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLEdBQUcsRUFBRSxDQUFDO0FBQzFCLElBQUkscUNBQWdCLENBQUMsR0FBRyxFQUFFLGtCQUFrQixDQUFDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIjIS91c3IvYmluL2VudiBub2RlXG5pbXBvcnQgJ3NvdXJjZS1tYXAtc3VwcG9ydC9yZWdpc3Rlcic7XG5pbXBvcnQgKiBhcyBjZGsgZnJvbSAnQGF3cy1jZGsvY29yZSc7XG5pbXBvcnQgeyBTcG90RmFyZ2F0ZVN0YWNrIH0gZnJvbSAnLi4vbGliL3Nwb3QtZmFyZ2F0ZS1zdGFjayc7XG5cbmNvbnN0IGFwcCA9IG5ldyBjZGsuQXBwKCk7XG5uZXcgU3BvdEZhcmdhdGVTdGFjayhhcHAsICdTcG90RmFyZ2F0ZVN0YWNrJyk7XG4iXX0=
