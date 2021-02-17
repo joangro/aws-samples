@@ -1,0 +1,42 @@
+Resources:
+  TaskDefinition:
+    Type: "AWS::ECS::TaskDefinition"
+    Properties:
+      ContainerDefinitions:
+        - Name: s3fs
+          Image: '914609264432.dkr.ecr.eu-west-1.amazonaws.com/s3fs:latest'
+          Cpu: 128
+          Environment:
+            - Name: "NGINX_VAR"
+              Value: "-c /etc/nginx/nginx.conf -g \"daemon off;\""
+            - Name: "HASH_SECRETLEARNING"
+              Value: "1234567t9012abcz"
+            - Name: "S3FS_VAR"
+              Value: "-f -d -o iam_role=custom-tt-dev-s3-role -o url=https://s3.sa-east-1.amazonaws.com -o endpoint=sa-east-1 -o dbglevel=info -o curldbg -o allow_other -o use_cache=/tmp rcs-s3-private /home/s3teste -o use_path_request_style -o umask=0022,uid=998,gid=998"
+            - Name: "HASH_SECRET"
+              Value: "56786390670add"
+          LinuxParameters:
+            Capabilities:
+              Add:
+               - "SYS_ADMIN"
+            Devices:
+              - HostPath: "/dev/fuse"
+                #ContainerPath: "/dev/fuse"
+                Permissions:
+                  - read
+          Memory: 128
+          Essential: true
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Sub "${AWS::Region}"
+              awslogs-group: 's3fs'
+      Family: s3fs
+      NetworkMode: bridge
+
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: ec2-cases
+      DesiredCount: 1
+      TaskDefinition: !Ref TaskDefinition

@@ -1,0 +1,83 @@
+version: "3"
+services:
+  mistral:
+    image: njinn/mistral
+    restart: always
+    networks:
+      - database
+      - message-broker
+    environment:
+      - UPGRADE_DB=true
+      - MESSAGE_BROKER_URL=rabbit://njinn:njinn@rabbitmq:5672/njinn
+      - DATABASE_URL=postgresql+psycopg2://njinn:njinn@postgresql:5432/njinn
+      - AUTH_ENABLE=false
+      - NJINN_URL=http://api:8000
+      - NJINN_SECRET=njinn
+
+  api:
+    image: njinn/api
+    restart: always
+    networks:
+      - database
+      - message-broker
+      - njinn
+    environment:
+      - NJINN_FIELD_ENCRYPTION_KEY=ZWl5b29qMWFnb3lhaTFpeWFlcXU5b293YTlFazBLYWltOGNlaWthaGxvaHA5ZWVmb0MK
+      - NJINN_SECRET_KEY=Aixilaib7feePae2zoo1KooyohC0hahXah7ohm2quiexohFuJi
+      - NJINN_MISTRAL_SECRET=thaquahpee5ke8ohngeetoo7aaHau6Ha
+      - NJINN_DATABASE_URL=postgresql://njinn:njinn@postgresql:5432/njinn
+
+  ui:
+    image: njinn/ui
+    restart: always
+    networks:
+      - njinn
+
+  postgresql:
+    image: postgres:10.1-alpine
+    restart: always
+    volumes:
+      - postgresql:/var/lib/postgresql/data
+    networks:
+      - database
+    environment:
+      - POSTGRES_PASSWORD=njinn
+      - POSTGRES_USER=njinn
+      - POSTGRES_DB=njinn
+    command: postgres -c 'lock_timeout=5s'
+
+  rabbitmq:
+    image: rabbitmq:3.7.2-management-alpine
+    restart: always
+    ports:
+      - "5671:5671"
+      - "5672:5672"
+    networks:
+      - message-broker
+    hostname: rabbitmq
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK=0.81
+      - RABBITMQ_DEFAULT_USER=njinn
+      - RABBITMQ_DEFAULT_PASS=njinn
+      - RABBITMQ_DEFAULT_VHOST=njinn
+  
+  nginx:
+    image: nginx:1.17.9
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - njinn
+    ports:
+      - "80:80"
+
+volumes:
+  postgresql:
+  rabbitmq:
+
+networks:
+  database:
+  message-broker:
+  njinn:

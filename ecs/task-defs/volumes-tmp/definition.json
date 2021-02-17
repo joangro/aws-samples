@@ -1,0 +1,43 @@
+{
+    "family": "tmp-vol", 
+    "taskRoleArn": "", 
+    "executionRoleArn": "", 
+    "containerDefinitions": [
+        {
+            "name": "write", 
+            "image": "busybox", 
+            "cpu": 10, 
+            "memory": 300, 
+	    "entryPoint": [
+        	"sh",
+        	"-c"
+      	     ],
+      	     "command": [
+        	"echo $(date) > /tmp/filetest"
+      		],
+            "mountPoints": [
+                {
+                    "sourceVolume": "temporary", 
+                    "containerPath": "/tmp", 
+                    "readOnly": false
+                }
+            ], 
+            "privileged": true, 
+            "interactive": true, 
+            "pseudoTerminal": true
+            }
+    ], 
+    "volumes": [
+        {
+            "name": "temporary", 
+            "host": {
+                "sourcePath": "/tmp"
+            } 
+        }
+    ], 
+    "requiresCompatibilities": [
+        "EC2"
+    ], 
+    "pidMode": "host", 
+    "ipcMode": "host"
+}

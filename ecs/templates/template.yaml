@@ -1,0 +1,33 @@
+Resources:
+  MyCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      CapacityProviders:
+        - FARGATE_SPOT
+      DefaultCapacityProviderStrategy: 
+        - CapacityProvider: FARGATE_SPOT
+          Weight: 1
+  MyTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      RequiresCompatibilities: 
+        - FARGATE
+      NetworkMode: awsvpc
+      Cpu: '256'
+      Memory: '512'
+      ContainerDefinitions:
+        - Name: MyContainer
+          Image: amazon/amazon-ecs-sample
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      CapacityProviderStrategy:
+        - CapacityProvider: FARGATE_SPOT
+          Weight: 10
+      DesiredCount: 2
+      NetworkConfiguration:
+        AwsVpcConfiguration:
+          Subnets: 
+            - subnet-0f6adc20c0c54c87c
+      Cluster: !Ref MyCluster
+      TaskDefinition: !Ref MyTaskDefinition

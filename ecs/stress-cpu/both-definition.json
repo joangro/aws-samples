@@ -1,0 +1,30 @@
+{
+    "containerDefinitions": [
+        {
+	    "name": "stress",
+	    "cpu": 128,
+            "image": "progrium/stress",
+	    "command": [
+		    "--cpu",
+		    "1"
+	    ],
+            "essential": true,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "Kong",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "konga"
+                }
+            }
+        }
+    ],
+    "family": "stress",
+    "executionRoleArn": "arn:aws:iam::914609264432:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

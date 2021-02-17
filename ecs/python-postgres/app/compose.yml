@@ -1,0 +1,31 @@
+version: "3"
+
+volumes:
+  kong_data: {}
+
+services:
+  database:
+    image: postgres:9.6
+    restart: on-failure
+    volumes:
+      - kong_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: Test123!
+      POSTGRES_DB: test
+      #networks:
+      #- container_network
+  myapp:
+    image: 914609264432.dkr.ecr.us-east-1.amazonaws.com/postgres-test
+    ports:
+      - "8080:8080"
+        #networks:
+        #- container_network
+    depends_on:
+      - database
+#networks:
+  #container_network:
+    #driver: bridge
+

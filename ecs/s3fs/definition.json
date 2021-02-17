@@ -1,0 +1,37 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "s3fs",
+            "image": "914609264432.dkr.ecr.eu-west-1.amazonaws.com/s3fs:latest",
+            "essential": true,
+	    "linuxParameters": {
+                "capabilities": {
+                    "add": [
+                        "SYS_ADMIN"
+                    ]
+                },
+                "devices": [
+                    {
+                        "hostPath": "/dev/fuse"
+                    }
+                ]
+	    },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "s3fs",
+                    "awslogs-region": "eu-west-1",
+                    "awslogs-stream-prefix": "s3fs"
+                }
+            }
+        }
+    ],
+    "family": "s3fs",
+    "executionRoleArn": "arn:aws:iam::914609264432:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "256",
+    "memory": "512"
+}

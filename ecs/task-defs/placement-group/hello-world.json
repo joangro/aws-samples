@@ -1,0 +1,19 @@
+{
+    "family": "hello-world",
+    "executionRoleArn": "arn:aws:iam::914609264432:role/ecsTaskAdminRole",
+    "networkMode": "host",
+    "containerDefinitions": [
+        {
+            "name": "hello-world",
+            "image": "914609264432.dkr.ecr.us-east-1.amazonaws.com/cases:latest",
+            "essential": true
+        }
+    ],
+    "memory": "3000",
+    "placementConstraints": [
+    {
+        "expression": "attribute:test == schedule",
+        "type": "memberOf"
+    }
+    ]
+}

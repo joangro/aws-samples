@@ -1,0 +1,51 @@
+Resources:
+
+# Capacity provider to create in the stack. Takes a created ASG in the same template to create the capacity provider.
+  ECSCapacityProvider:
+    Type: AWS::ECS::CapacityProvider
+    Properties:
+      Name: capacity-provider-example
+      AutoScalingGroupProvider:
+        AutoScalingGroupArn: !Ref ASG
+        ManagedScaling:
+          MaximumScalingStepSize: 10
+          MinimumScalingStepSize: 1
+          Status: ENABLED
+          TargetCapacity: 100
+
+# Reference the created capacity provider on the CapacityProviders key. As an example, other providers can also be added on the cluster, for example Fargate.
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: FargateClusterWithASGCapacityProvider
+      CapacityProviders:
+        - !Ref ECSCapacityProvider
+        - FARGATE
+ 
+# Create Launch Template for the ASG. ECS Optimised AMI is used here as an example.
+  LaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData:
+        ImageId: ami-08803b8f0bf9db0ab
+        InstanceType: t2.medium
+      
+# Create ASG for the capacity provider
+  ASG:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AutoScalingGroupName: ECS-ASG
+      MinSize: "1"
+      MaxSize: "6"
+      DesiredCapacity: "1"
+      AvailabilityZones:
+        - eu-west-1a
+        - eu-west-1b
+      HealthCheckGracePeriod: 300
+      LaunchTemplate:
+        LaunchTemplateId: !Ref LaunchTemplate
+        Version: !GetAtt LaunchTemplate.LatestVersionNumber
+
+
+
+

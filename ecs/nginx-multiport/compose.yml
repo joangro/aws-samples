@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  test:
+    image: 914609264432.dkr.ecr.eu-west-1.amazonaws.com/nginxp
+    restart: on-failure
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: Kong
+        awslogs-region: eu-west-1
+        awslogs-stream-prefix: konga
+    ports:
+      - "80:80"
+      - "8000:8000"
+
